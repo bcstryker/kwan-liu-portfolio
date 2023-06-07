@@ -1,0 +1,13 @@
+.App {
+    color: var(--text-primary);
+    background-color: var(--background);
+    font-size: large;
+    font-weight: bold;
+    transition: all .5s;
+    overflow: hidden;
+}
+
+.card {
+    color: var(--text-primary);
+    border: 1px solid var(--accent);
+}
