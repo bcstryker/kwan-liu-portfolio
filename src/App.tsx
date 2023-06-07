@@ -1,11 +1,12 @@
-import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import Card from "./components/Card";
 
 function App() {
   return (
     <div className="App">
+      <head>
+        <title>Kwan Liu</title>
+      </head>
       <body className="bg-black">
         <div className="h-screen">
           <div className="flex flex-col pt-[35vh] justify-center h-1/2">
