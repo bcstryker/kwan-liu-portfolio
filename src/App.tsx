@@ -1,54 +1,41 @@
 import "./App.css";
 import Card from "./components/Card";
-import {useCallback, useEffect, useState} from "react";
 import ThemeSwitch from "./components/ThemeSwitch";
+import useLocalStorage from "use-local-storage";
 
 function App() {
-  const [darkTheme, setDarkTheme] = useState(true);
-  const [colors, setColors] = useState<ColorTheme>({
-    foreground: "white",
-    background: "black",
-    accent: "fuchsia-100",
-  });
-  const switchTheme = useCallback(() => {
-    setColors({
-      background: darkTheme ? "black" : "white",
-      foreground: darkTheme ? "white" : "black",
-      accent: darkTheme ? "fuchsia" : "cyan",
-    });
-  }, [darkTheme]);
-  useEffect(() => {
-    switchTheme();
-  }, [switchTheme]);
+  const defaultDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const [theme, setTheme] = useLocalStorage('theme', defaultDark ? 'dark' : 'light');
+
+  const switchTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+  }
 
   return (
-    <div className="App">
+    <div className="App" data-theme={theme}>
       <head>
         <title>Kwan Liu</title>
       </head>
-      <body style={{backgroundColor: colors.background}}>
-        <ThemeSwitch colors={colors} setDarkTheme={setDarkTheme} />
+      <body>
+        <ThemeSwitch switchTheme={switchTheme} />
         <div className="h-screen">
           <div className="flex flex-col pt-[35vh] justify-center h-1/2">
-            <h1 style={{color: colors.foreground}} className={`text-4xl text-center`}>
-              Kwan Liu
-            </h1>
-            <h1 style={{color: colors.foreground}} className={`text-2xl text-center`}>
-              Product Designer
-            </h1>
+            <h1 className={`text-4xl text-center`}>Kwan Liu</h1>
+            <h1 className={`text-2xl text-center`}>Product Designer</h1>
           </div>
           <div className={`pt-24 py-24 flex justify-center h-1/2`}>
             <table className="border-collapse border-spacing-16">
               <tbody>
                 <tr>
                   <td className="pr-12">
-                    <Card colors={colors} linkText="First Link" />
+                    <Card linkText="First Link" />
                   </td>
                   <td className="pr-12">
-                    <Card colors={colors} linkText="Second Link" />
+                    <Card linkText="Second Link" />
                   </td>
                   <td>
-                    <Card colors={colors} linkText="Third Link" />
+                    <Card linkText="Third Link" />
                   </td>
                 </tr>
               </tbody>
